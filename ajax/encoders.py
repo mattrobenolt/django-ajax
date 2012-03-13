@@ -43,7 +43,7 @@ class DefaultEncoder(object):
             ret = {}
 
         ret.update(data['fields'])
-        if AJAX_PK_ATTR_NAME and AJAX_PK_ATTR_NAME != 'pk':
+        if AJAX_PK_ATTR_NAME is not None and AJAX_PK_ATTR_NAME != 'pk' and 'pk' in data:
             ret[AJAX_PK_ATTR_NAME] = data['pk']
             del ret['pk']
 

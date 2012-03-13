@@ -10,7 +10,7 @@ import collections
 
 
 # Used to change the field name for the Model's pk.
-AJAX_PK_ATTR_NAME = getattr(settings, 'AJAX_PK_ATTR_NAME', 'pk')
+AJAX_PK_ATTR_NAME = getattr(settings, 'AJAX_PK_ATTR_NAME', None)
 
 
 def _fields_from_model(model):
@@ -43,7 +43,9 @@ class DefaultEncoder(object):
             ret = {}
 
         ret.update(data['fields'])
-        ret[AJAX_PK_ATTR_NAME] = data['pk']
+        if AJAX_PK_ATTR_NAME and AJAX_PK_ATTR_NAME != 'pk':
+            ret[AJAX_PK_ATTR_NAME] = data['pk']
+            del ret['pk']
 
         for field, val in ret.iteritems():
             try:
